@@ -1,7 +1,8 @@
-export default function Nav(props) {
-  return (
-    <>
-      <h1>hello</h1>
-    </>
-  );
+export default function Nav() {
+	return (
+		<>
+			{/* CSS class property is className in jsx */}
+			<h1 className="text-white bg-black block">Navbar</h1>
+		</>
+	);
 }
