@@ -1,12 +1,12 @@
-import { useState } from "react";
 import SearchBar from "../components/SearchBar";
-import Nav from "../components/Nav";
+import RegistrationForm from "../components/RegistrationForm";
 
 export default function main(props) {
   //   előbb-utóbb authentication kell ide már
   return (
     <>
       <SearchBar />
+      <RegistrationForm />
     </>
   );
 }
