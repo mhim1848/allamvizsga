@@ -1,38 +1,39 @@
-import { useState } from "react";
+import { Formik, Form } from "formik";
+import CustomTextInput from "./CustomTextInput";
+import * as Yup from "yup";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
-  const handleSubmit = () => {};
-
   return (
-    <form onSubmit={handleSubmit} className="container">
-      <div className="field">
-        <input
+    <Formik
+      initialValues={{ email: "", password: "" }}
+      validationSchema={Yup.object({
+        email: Yup.string().email("Invalid email address").required("Required"),
+        password: Yup.string().required("Required"),
+      })}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          setSubmitting(false);
+        }, 400);
+      }}
+    >
+      <Form className="form-control">
+        <CustomTextInput
           className="input"
           type="email"
+          name="email"
           placeholder="Email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
         />
-      </div>
-      <div className="field">
-        <input
+        <CustomTextInput
           className="input"
           type="password"
+          name="password"
           placeholder="Password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
         />
-      </div>
-      <div className="field">
-        <button type="submit" className="validButton">
+        <button type="submit" className="btn btn-ghost normal-case text-xl">
           Login
         </button>
-      </div>
-    </form>
+      </Form>
+    </Formik>
   );
 }

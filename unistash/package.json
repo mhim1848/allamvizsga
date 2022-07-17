@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.26.0",
+    "daisyui": "^2.19.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "formik": "^2.2.9",
     "next": "12.1.0",
@@ -17,7 +18,8 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "sass": "^1.49.9",
-    "swr": "^1.2.2"
+    "swr": "^1.2.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",

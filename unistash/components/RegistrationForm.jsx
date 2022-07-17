@@ -1,95 +1,89 @@
-import { useFormik } from "formik";
+import { Formik, Form } from "formik";
+import CustomTextInput from "./CustomTextInput";
+import * as Yup from "yup";
 
 export default function RegistrationForm() {
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      passwordEnsurance: "",
-      firstName: "",
-      lastName: "",
-    },
-    validate,
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
-    },
-  });
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <label htmlFor="email">Email Address</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        placeholder="Email"
-        onChange={formik.handleChange}
-        value={formik.values.email}
-      />
-      {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+    <>
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+          passwordEnsurance: "",
+          firstName: "",
+          lastName: "",
+        }}
+        validationSchema={Yup.object({
+          email: Yup.string()
+            .email("Invalid email address")
+            .required("Required"),
+          password: Yup.string().required("Required"),
+          passwordEnsurance: Yup.string()
+            .oneOf([Yup.ref("password"), null], "Passwords don't match!")
+            .required("Required"),
+          firstName: Yup.string().max(
+            20,
+            "Must be at most 20 characters long."
+          ),
+          lastName: Yup.string().max(
+            30,
+            "Must be at mosst 30 characters long."
+          ),
+        })}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 400);
+        }}
+      >
+        <Form className="form-control">
+          {/* <label htmlFor="email">Email Address</label> */}
+          <CustomTextInput
+            className="input input-info"
+            label="Email Address"
+            name="email"
+            type="email"
+            placeholder="Your@email.here"
+          />
 
-      <input
-        id="password"
-        name="password"
-        type="password"
-        placeholder="Password"
-        onChange={formik.handleChange}
-        value={formik.values.password}
-      />
+          <CustomTextInput
+            className="input input-info"
+            label="Password"
+            name="password"
+            type="password"
+            placeholder="Password"
+          />
 
-      <input
-        id="passwordEnsurance"
-        name="passwordEnsurance"
-        type="password"
-        placeholder="Please repeat your password"
-        onChange={formik.handleChange}
-        value={formik.values.passwordEnsurance}
-      />
+          <CustomTextInput
+            className="input input-info"
+            label="Confirm password"
+            name="passwordEnsurance"
+            type="password"
+            placeholder="Repeat your password"
+          />
 
-      <input
-        id="firstName"
-        name="firstName"
-        type="text"
-        placeholder="First name"
-        onChange={formik.handleChange}
-        value={formik.values.firstName}
-      />
-      {formik.errors.firstName ? <div>{formik.errors.firstName}</div> : null}
+          <CustomTextInput
+            className="input input-info"
+            label="First name"
+            name="firstName"
+            type="text"
+            placeholder="First name"
+          />
 
-      <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        placeholder="Last name"
-        onChange={formik.handleChange}
-        value={formik.values.lastName}
-      />
-      {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
+          <CustomTextInput
+            className="input input-info"
+            label="Last name"
+            name="lastName"
+            type="text"
+            placeholder="Last name"
+          />
 
-      <button type="submit">Create account!</button>
-    </form>
+          <button type="submit" class="btn btn-accent btn-outline">
+            Create account!
+          </button>
+        </Form>
+      </Formik>
+    </>
   );
 }
-
-const validate = (values) => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = "Required";
-  } else if (values.firstName.length > 20) {
-    errors.firstName = "Must be 20 characters or less";
-  }
-
-  if (!values.lastName) {
-    errors.lastName = "Required";
-  } else if (values.lastName.length > 20) {
-    errors.lastName = "Must be 20 characters or less";
-  }
-
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
-
-  return errors;
-};

@@ -1,31 +1,37 @@
-import { useState } from "react";
-import { Formik, useFormik } from "formik";
+import { Formik, Form } from "formik";
+import CustomTextInput from "./CustomTextInput";
+import * as Yup from "yup";
 
 export default function SearchBar(props) {
-  //   const [search, setSearch] = useState("");
-  const formik = useFormik({
-    initialValues: {
-      searchBar: "",
-    },
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
-    },
-  });
-
   return (
-    <>
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="searchBar">What would you like to look for?</label>
-        <input
-          id="searchBar"
+    <Formik
+      initialValues={{ searchBar: "" }}
+      validationSchema={Yup.object({
+        searchBar: Yup.string().max(50, "Must be at most 50 characters long."),
+      })}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          setSubmitting(false);
+        }, 400);
+      }}
+    >
+      <Form className="flex w-full">
+        <label htmlFor="searchBar" className="label">
+          What would you like to look for?
+        </label>
+        <div className="divider divider-horizontal" />
+        <CustomTextInput
+          className="input"
           name="searchBar"
           type="text"
-          onChange={formik.handleChange}
-          value={formik.values.searchBar}
+          placeholder="Type in your questions."
         />
 
-        <button type="submit">Submit</button>
-      </form>
-    </>
+        <button type="submit" className="btn btn-accent btn-outline">
+          Submit
+        </button>
+      </Form>
+    </Formik>
   );
 }

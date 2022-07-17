@@ -3,19 +3,19 @@ import Link from "next/link";
 export default function Nav() {
   return (
     <>
-      <div className="text-white bg-black block p-2 space-x-3 group">
+      <div className="navbar bg-primary text-primary-content">
         {/* CSS class property is className in jsx */}
-        <Link href="/login">
-          <a className="hover:bg-gray-600">Login</a>
+        <Link href="/">
+          <a className="btn btn-ghost normal-case text-xl">Home</a>
         </Link>
         <Link href="/registration">
-          <a className="hover:bg-gray-600">Sign Up</a>
+          <a className="btn btn-ghost normal-case text-xl">Sign Up</a>
         </Link>
         <Link href="/faq">
-          <a className="hover:bg-gray-600">FAQ</a>
+          <a className="btn btn-ghost normal-case text-xl">FAQ</a>
         </Link>
         <Link href="/main">
-          <a className="hover:bg-gray-600">Main</a>
+          <a className="btn btn-ghost normal-case text-xl">Main</a>
         </Link>
       </div>
     </>
